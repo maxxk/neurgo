@@ -44,6 +44,10 @@ func (activation *EncodableActivation) UnmarshalJSON(bytes []byte) error {
 		activation.ActivationFunction = math.Tanh
 	case "identity":
 		activation.ActivationFunction = Identity
+	case "relu":
+		activation.ActivationFunction = ReLU
+	case "logistic":
+		activation.ActivationFunction = Logistic
 	default:
 		log.Panicf("Unknown activation function: %v", activation.Name)
 	}
@@ -84,8 +88,30 @@ func EncodableTanh() *EncodableActivation {
 	}
 }
 
+func ReLU(x float64) float64 {
+	return math.Max(x, 0)
+}
+
+func EncodableReLU() *EncodableActivation {
+	return &EncodableActivation {
+		Name:            "relu",
+		ActivationFunction: ReLU,
+	}
+}
+
+func Logistic(x float64) float64 {
+	return float64(1.0) / (1.0 + math.Exp(-x))
+}
+
+func EncodableLogistic() *EncodableActivation {
+	return &EncodableActivation {
+		Name:        "logistic",
+		ActivationFunction: Logistic,
+	}
+}
+
 func AllEncodableActivations() []*EncodableActivation {
-	return []*EncodableActivation{EncodableSigmoid(), EncodableTanh()}
+	return []*EncodableActivation{EncodableSigmoid(), EncodableTanh(), EncodableReLU(), EncodableLogistic(), EncodableIdentity()}
 }
 
 func RandomEncodableActivation() *EncodableActivation {
