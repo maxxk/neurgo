@@ -48,6 +48,10 @@ func (activation *EncodableActivation) UnmarshalJSON(bytes []byte) error {
 		activation.ActivationFunction = ReLU
 	case "logistic":
 		activation.ActivationFunction = Logistic
+	case "abs":
+		activation.ActivationFunction = math.Abs
+	case "gaussian":
+		activation.ActivationFunction = Gaussian
 	default:
 		log.Panicf("Unknown activation function: %v", activation.Name)
 	}
