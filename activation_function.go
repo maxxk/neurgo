@@ -110,8 +110,26 @@ func EncodableLogistic() *EncodableActivation {
 	}
 }
 
+func EncodableAbs() *EncodableActivation {
+	return &EncodableActivation {
+		Name:       "abs",
+		ActivationFunction: math.Abs,
+	}
+}
+
+func Gaussian(x float64) float64 {
+	return math.Exp(-16*x*x)
+}
+
+func EncodableGaussian() *EncodableActivation {
+	return &EncodableActivation {
+		Name:      "gaussian",
+		ActivationFunction: Gaussian,
+	}
+}
+
 func AllEncodableActivations() []*EncodableActivation {
-	return []*EncodableActivation{EncodableSigmoid(), EncodableTanh(), EncodableReLU(), EncodableLogistic(), EncodableIdentity()}
+	return []*EncodableActivation{EncodableSigmoid(), EncodableTanh(), EncodableReLU(), EncodableLogistic(), EncodableIdentity(), EncodableGaussian(), EncodableAbs()}
 }
 
 func RandomEncodableActivation() *EncodableActivation {
